@@ -1,4 +1,5 @@
 import React from 'react';
+import "../index";
 
 export class NuevaTareaForm extends React.Component {
   constructor() {
@@ -10,7 +11,7 @@ export class NuevaTareaForm extends React.Component {
             nombre: '',
             compañia: '',
             ciudad: '',
-            pais: 'Argentina'
+            pais: ''
         }
     };
   }
@@ -69,17 +70,50 @@ handleNuevaTarea = (ev) => {
 
   render() {
     return (
-        <form onSubmit={this.handleNuevaTarea}>
-            <label>Nombre:</label>
-            <input type="text" required value={this.state.nuevaTarea.nombre} onChange={(evento) => this.handleNuevaTareaNombre(evento)}></input>
-            <label>Compañia:</label>
-            <input type="text" required value={this.state.nuevaTarea.compañia} onChange={(evento) => this.handleNuevaTareaCompañia(evento)}></input>
-            <label>Ciudad:</label>
-            <input type="text" required value={this.state.nuevaTarea.ciudad} onChange={(evento) => this.handleNuevaTareaCiudad(evento)}></input>
-            <label>Pais:</label>
-            <input type="text" required value={this.state.nuevaTarea.pais} onChange={(evento) => this.handleNuevaTareaPais(evento)}></input>
-            <button type="submit">Agregar</button>
+      <div className="todo" >
+        <form className="formulario" onSubmit={this.handleNuevaTarea}>
+
+
+            <div className="formulario__grupo">
+              <label className="formulario__label">Función:</label>
+              <div  className="formulario__grupo-input">
+                <input className="formulario__input" type="text" required value={this.state.nuevaTarea.nombre}
+                  placeHolder="Ingrese Función" onChange={(evento) => this.handleNuevaTareaNombre(evento)}></input>
+              </div>
+            </div>
+
+
+            <div className="formulario__grupo">
+              <label className="formulario__label" >Compañía:</label>
+              <div  className="formulario__grupo-input">
+                <input className="formulario__input" type="text" required value={this.state.nuevaTarea.compañia}
+                  placeHolder="Ingrese Compañía" onChange={(evento) => this.handleNuevaTareaCompañia(evento)}></input>
+              </div>
+            </div>
+
+
+            <div className="formulario__grupo">
+              <label className="formulario__label" >Ciudad:</label>
+              <div  className="formulario__grupo-input">
+                <input className="formulario__input" type="text" required value={this.state.nuevaTarea.ciudad}
+                 placeHolder="Ingrese Ciudad" onChange={(evento) => this.handleNuevaTareaCiudad(evento)}></input>
+              </div>
+            </div>
+
+
+            <div className="formulario__grupo">
+              <label className="formulario__label" >Pais:</label>
+              <div  className="formulario__grupo-input">
+                <input className="formulario__input" type="text" required value={this.state.nuevaTarea.pais}
+                 placeHolder="Ingrese Pais" onChange={(evento) => this.handleNuevaTareaPais(evento)}></input>
+              </div>
+            </div>
+
+            <div className="formulario__grupo-btn-agregar">
+              <button className="formulario__btn" type="submit">Agregar</button>
+            </div>
         </form>
+      </div>
     );
   }
 

@@ -1,0 +1,51 @@
+.lista{
+    display: block;
+    text-align: center;
+    padding:10px;
+    font-size: 24px;
+    font-weight: 600;
+    color:rgb(231, 149, 47);
+    border-bottom: 2px;
+    border-bottom-color: cornflowerblue;
+    border-bottom-style: solid;
+    border-bottom-width: 10px;
+    border-top: 2px;
+    border-top-color: cornflowerblue;
+    border-top-style: solid;
+    border-top-width: 10px;
+    }
+  
+  .lista span{
+    color: rgb(38, 0, 255);
+    padding-inline: 40px;
+  }
+
+  .elemento{
+    display: block;
+    text-align: center;
+    padding:5px;
+    font-size: 20px;
+    font-weight: 600;
+    color:rgb(100, 57, 3);
+  }
+  
+  .elemento span{
+    padding-inline: 50px;
+  }
+
+  .boton {
+    height: 35px;
+    line-height: 35px;
+    width: 10%;
+    background: red;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .1s ease all;
+  }
+  
+  .boton:hover {
+    box-shadow: 3px 0px 10px rgb(6, 114, 238);
+  }
