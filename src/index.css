@@ -11,3 +11,93 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+main {
+	max-width: 800px;
+	width: 50%;
+	margin: auto;
+	padding: 40px;
+}
+
+.todo {
+  display: block;
+  margin: 15px auto;
+  padding:30px ;
+  background-color: rgb(174, 175, 174);
+  width: 50%;
+  }
+
+.formulario {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 30px;
+}
+
+/* manipulas los nombres de los label que se visualizan (titulo) */
+.formulario__label {
+	display: block;
+	font-weight: 700;
+	padding: 10px;
+	cursor: pointer;
+}
+
+ .formulario__grupo-input {
+	position: relative;
+}
+
+.formulario__input {
+	width: 70%;
+	background: #fff;
+	border: 3px solid #0075FF;
+	border-radius: 3px;
+	height: 35px;
+	line-height: 45px;
+	padding: 0 30px 0 10px;
+	transition: .3s ease all;
+}
+
+.formulario__input:focus {
+	border: 3px solid #2d6d02;
+	outline: none;
+	box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+}
+
+.formulario__grupo-btn-agregar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  grid-column: span 2;
+}
+
+.formulario__btn {
+	height: 35px;
+	line-height: 35px;
+	width: 20%;
+	background: #000;
+	color: #fff;
+	font-weight: bold;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: .1s ease all;
+}
+
+.formulario__btn:hover {
+	box-shadow: 3px 0px 10px rgb(6, 114, 238);
+}
+
+
+/* ----- -----  Mediaqueries ----- ----- */
+@media screen and (max-width: 800px) {
+	.formulario {
+		grid-template-columns: 1fr;
+	}
+
+	.formulario__grupo-btn-agregar {
+		grid-column: 1;
+	}
+
+	.formulario__btn {
+		width: 100%;
+	}
+}
