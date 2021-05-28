@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tarea } from './Tarea';
-import { NuevaTareaForm } from './NuevaTareaForm';
+import { Tarea } from '../Tarea';
+import { NuevaTareaForm } from '../NuevaTareaForm';
 
 export class Tareas extends React.Component {
   constructor() {
@@ -21,7 +21,6 @@ export class Tareas extends React.Component {
           tareas: [...this.state.tareas, elem]
       });
   }
-
    eliminarTarea = (id) => {
     this.setState({
       tareas: this.state.tareas.filter((tarea, ind) => ind !== id)

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../index";
+import "../index.css";
 
 export class NuevaTareaForm extends React.Component {
   constructor() {
@@ -78,7 +78,7 @@ handleNuevaTarea = (ev) => {
               <label className="formulario__label">Función:</label>
               <div  className="formulario__grupo-input">
                 <input className="formulario__input" type="text" required value={this.state.nuevaTarea.nombre}
-                  placeHolder="Ingrese Función" onChange={(evento) => this.handleNuevaTareaNombre(evento)}></input>
+                  placeholder="Ingrese Función" onChange={(evento) => this.handleNuevaTareaNombre(evento)}></input>
               </div>
             </div>
 
@@ -87,7 +87,7 @@ handleNuevaTarea = (ev) => {
               <label className="formulario__label" >Compañía:</label>
               <div  className="formulario__grupo-input">
                 <input className="formulario__input" type="text" required value={this.state.nuevaTarea.compañia}
-                  placeHolder="Ingrese Compañía" onChange={(evento) => this.handleNuevaTareaCompañia(evento)}></input>
+                  placeholder="Ingrese Compañía" onChange={(evento) => this.handleNuevaTareaCompañia(evento)}></input>
               </div>
             </div>
 
@@ -96,7 +96,7 @@ handleNuevaTarea = (ev) => {
               <label className="formulario__label" >Ciudad:</label>
               <div  className="formulario__grupo-input">
                 <input className="formulario__input" type="text" required value={this.state.nuevaTarea.ciudad}
-                 placeHolder="Ingrese Ciudad" onChange={(evento) => this.handleNuevaTareaCiudad(evento)}></input>
+                 placeholder="Ingrese Ciudad" onChange={(evento) => this.handleNuevaTareaCiudad(evento)}></input>
               </div>
             </div>
 
@@ -105,7 +105,7 @@ handleNuevaTarea = (ev) => {
               <label className="formulario__label" >Pais:</label>
               <div  className="formulario__grupo-input">
                 <input className="formulario__input" type="text" required value={this.state.nuevaTarea.pais}
-                 placeHolder="Ingrese Pais" onChange={(evento) => this.handleNuevaTareaPais(evento)}></input>
+                 placeholder="Ingrese Pais" onChange={(evento) => this.handleNuevaTareaPais(evento)}></input>
               </div>
             </div>
 
