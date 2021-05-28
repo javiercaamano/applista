@@ -11,7 +11,7 @@ export class NavBar extends React.Component {
         <Link to="/">Home </Link>
         <Link to="/compañias">Compañias </Link>
         <Link to="/ciudades">Ciudades </Link>
-        <Link to="/paises">Paises</Link>
+        <Link to="/paises">aises</Link>
     </p>;
   }
 }
