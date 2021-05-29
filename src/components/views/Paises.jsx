@@ -11,12 +11,13 @@ export class Paises extends React.Component {
       }
   }
   
-  componentDidMount(){
-    let prevPais = localStorage.getItem("countries")
-    this.setState({
-      countries: prevPais
-    })
-  }
+  componentDidMount() {
+    if (localStorage.getItem("countries") != null) {
+      this.setState({
+        paises: JSON.parse(localStorage.getItem("countries")),
+      });
+    }
+   }
 
   handleNuevoPais = (evt) => {
     evt.preventDefault();
@@ -33,6 +34,7 @@ export class Paises extends React.Component {
         paises: [...this.state.paises, pais],
         pais:''
       });
+      window.localStorage.setItem("countries", JSON.stringify([...this.state.paises, pais]))
     }
     else 
       {
@@ -44,13 +46,11 @@ export class Paises extends React.Component {
   }
 
   borrarPais = (id) => {
+    let otra = this.state.paises.filter((pais, idx) => idx !== id)
     this.setState({
-      paises: this.state.paises.filter((pais, idx) => idx !== id)
+      paises: otra
     });
-  }
-  
-  grabarDatos = () => {
-    window.localStorage.setItem("countries", this.state.paises)
+    window.localStorage.setItem("countries", JSON.stringify(otra))
   }
 
   render() {
@@ -65,7 +65,6 @@ export class Paises extends React.Component {
                   placeholder="Ingrese Pais" onChange={(evento) => this.handleNuevoPais(evento)}></input>
                 <button className="formulario__btnP" onClick={(evento) => this.agregarPais(evento)} >Agregar</button>
               </div>
-              <button className="formulario__btnP" onClick={this.grabarDatos}>Guardar</button>
             </div>
           </form>
         </div>
@@ -73,8 +72,9 @@ export class Paises extends React.Component {
         <ul className="ulpais">
           {this.state.paises.map((elem, indice) => {
             return (<>
-            <li className="pais" key={indice} >{elem}</li>
-            <button className="botonP" onClick={() => this.borrarPais(indice)}>Eliminar</button></>)
+              <li className="pais" key={indice} >{elem}</li>
+              <button className="botonP" key={indice} onClick={() => this.borrarPais(indice)}>Eliminar</button></>
+            )
           })}
         </ul>
       </>
