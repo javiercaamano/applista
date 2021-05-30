@@ -9,7 +9,6 @@ export class Compañias extends React.Component {
       this.state = {
         compañia: '',
         ciudadSelect: '',
-        paisSelect: '',
         ciudades: [],
         paises: [],
         compañias:[]
@@ -38,10 +37,6 @@ export class Compañias extends React.Component {
     window.localStorage.setItem("companies", JSON.stringify(this.state.compañias))
   }
 
-  grabarDatos = () => {
-    window.localStorage.setItem("companies", JSON.stringify(this.state.compañias))
-  }
-
   handleNuevaCompañia = (evt) => {
     evt.preventDefault();
     this.setState({
@@ -60,7 +55,6 @@ export class Compañias extends React.Component {
         compañia:'',
         ciudadSelect: ''
       });
-
      }
     else 
       {
@@ -91,21 +85,14 @@ export class Compañias extends React.Component {
             <div className="formulario__grupoP">
               <label className="formulario__labelP" >Compañia:</label>
               <div  className="formulario__grupo-inputP">
-
                 <input className="formulario__inputP" type="text" value={this.state.compañia}
                   placeholder="Ingrese Compañia" onChange={(evento) => this.handleNuevaCompañia(evento)}></input>
-
-
-                <select onChange={(evento) => this.handleSelectCiudad(evento)}>
-
+                <select className="formulario__select" onChange={(evento) => this.handleSelectCiudad(evento)}>
                   <option value="">Selecione ciudad...</option>
-
                   {this.state.ciudades.map((elem, indice) => {                      //Elijo ciudad
                     return (<option key={indice} value={JSON.stringify(elem)}>{elem.ciudad}</option>)})}
                 </select>
-
                   <input className="formulario__inputP" type="text" disable value={this.state.ciudadSelect.pais}></input>
-
                 <button className="formulario__btnP" onClick={(evento) => this.agregarCompañia(evento)} >Agregar</button>
               </div>
             </div>
@@ -124,4 +111,3 @@ export class Compañias extends React.Component {
     );
   }
 }
-// styles={selectStyles}

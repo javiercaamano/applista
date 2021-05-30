@@ -80,10 +80,10 @@ export class Ciudades extends React.Component {
               <div  className="formulario__grupo-inputP">
                 <input className="formulario__inputP" type="text" value={this.state.ciudad}
                   placeholder="Ingrese Ciudad" onChange={(evento) => this.handleNuevaCiudad(evento)}></input>
-                <select onChange={(evento) => this.handleSelect(evento)}>
+                <select className="formulario__select" onChange={(evento) => this.handleSelect(evento)}>
                   <option value="">Selecione pais...</option>
                   {this.state.paises.map((elem, indice) => {
-                    return (<option className="pais" key={indice} value={elem}>{elem}</option>)})}
+                    return (<option key={indice} value={elem}>{elem}</option>)})}
                 </select>
                 <button className="formulario__btnP" onClick={(evento) => this.agregarCiudad(evento)} >Agregar</button>
               </div>
