@@ -1,0 +1,128 @@
+  
+  .todoP {
+    display: block;
+    margin: 35px auto;
+    padding:30px ;
+    background-color: rgb(157, 175, 255);
+    width: 30%;
+  }
+
+  .etiqueta{
+    display: block;
+    text-align: center;
+    padding:5px;
+    font-size: 40px;
+    font-weight: 600;
+    color:rgb(0, 0, 0);
+  }
+
+  .ulpais{
+      width: 40%;
+      margin: auto;
+   }
+
+  .pais{
+    display: inline-block;
+    width: 50%;
+    padding:5px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    color:rgb(255, 6, 6);
+  }
+
+  .botonP {
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 7px;
+    width: 20%;
+    background: rgb(0, 153, 255);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .1s ease all;
+  }
+
+  .formularioP {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  /* manipulas los nombres de los label que se visualizan (titulo) */
+  .formulario__labelP {
+    display: block;
+    font-weight: 700;
+    font-size: 150%;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+   .formulario__grupo-inputP {
+    margin: auto;
+    width: 100%;
+    /* display: inline-block; */
+  }
+  
+  .formulario__inputP {
+    width: 30%;
+    background: #fff;
+    border: 3px solid #0075FF;
+    border-radius: 3px;
+    height: 35px;
+    line-height: 45px;
+    padding: 0 30px 0 10px;
+    transition: .3s ease all;
+    margin-right: 15px;
+  }
+  
+  .formulario__select{
+    width: 40%;
+    background: #fff;
+    border: 3px solid #0075FF;
+    border-radius: 3px;
+    height: 35px;
+    line-height: 45px;
+    padding: 0 30px 0 10px;
+    transition: .3s ease all;
+    margin-right: 15px;
+  }
+
+  .formulario__inputP:focus {
+    border: 3px solid #2d6d02;
+    outline: none;
+    box-shadow: 3px 0px 30px rgba(163,163,163, 0.4);
+  }
+  
+  .formulario__btnP {
+    height: 35px;
+    line-height: 35px;
+    margin-left: 20px;
+    width: 30%;
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .1s ease all;
+  }
+  
+  .formulario__btnP:hover {
+    box-shadow: 3px 0px 10px rgb(6, 114, 238);
+  }
+  
+  
+  /* ----- -----  Mediaqueries ----- ----- */
+  @media screen and (max-width: 800px) {
+      .formularioP {
+          grid-template-columns: 1fr;
+      }
+  
+       .formulario__btnP {
+          width: 100%;
+      }
+  }

@@ -1,20 +1,27 @@
 import React from 'react';
-import { Tarea } from './Tarea';
-import { NuevaTareaForm } from './NuevaTareaForm';
+import { Tarea } from '../Tarea';
+import { NuevaTareaForm } from '../NuevaTareaForm';
 
 export class Tareas extends React.Component {
   constructor() {
     super();
-    //this.eliminarTarea = this.eliminarTarea.bind(this);
-    //this.agregaNuevaTarea = this.agregaNuevaTarea.bind(this);
     this.state = {
       tareas: [
-        {nombre: 'Supervisor', compañia: 'Empresa', ciudad: 'La Rioja', pais: 'Argentina'},
-        {nombre: 'Empleado', compañia: 'Compa2', ciudad: 'Catamarca', pais: 'Argentina'},
-        {nombre: 'Soporte', compañia: 'Compa3', ciudad: 'Cordoba', pais: 'España'}
+
       ]
     };
   }
+  componentDidMount(){
+  if (localStorage.getItem("tareas") != null) {
+    this.setState({
+      tareas: JSON.parse(localStorage.getItem("tareas")),
+    });
+  }
+}
+
+componentDidUpdate(){
+  window.localStorage.setItem("tareas", JSON.stringify(this.state.tareas))
+}
 
   agregaNuevaTarea = (ev, elem) => {
     this.setState({
