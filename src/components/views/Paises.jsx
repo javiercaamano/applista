@@ -1,22 +1,33 @@
 import React from 'react';
 import {validaValor} from '../../utils/validaString';
 import "../../Common/paises.css";
+import axios from "axios";
+
+const url = {
+  get: "https://api-fake-pilar-tecno.herokuapp.com/countries",
+  post: "https://api-fake-pilar-tecno.herokuapp.com/countries",
+  delete: "https://api-fake-pilar-tecno.herokuapp.com/countries/",
+};
 
 export class Paises extends React.Component {
   constructor() {
     super();
      this.state = {
         pais: '',
-        paises: [],
+        dataCountry:[],  //recibo de la API Rest 
       }
   }
   
   componentDidMount() {
-    if (localStorage.getItem("countries") != null) {
-      this.setState({
-        paises: JSON.parse(localStorage.getItem("countries")),
+    axios
+      .get(url.get)
+      .then((response) => {
+        console.log(response);
+        this.setState({ dataCountry: response.data });
+      })
+      .catch((error) => { // Aca deberé tratar el error de algun modo
+        console.log(error); // Tslvez un cartel alert
       });
-    }
    }
 
   handleNuevoPais = (evt) => {
@@ -27,16 +38,23 @@ export class Paises extends React.Component {
   }
   
   agregarPais = (evto) => {
+
     let pais = this.state.pais;
+    let data = {name: pais} 
+
     evto.preventDefault();
-    if (validaValor(pais)){
-      this.setState({
-        paises: [...this.state.paises, pais],
-        pais:''
-      });
-      window.localStorage.setItem("countries", JSON.stringify([...this.state.paises, pais]))
+    if (validaValor(data.name)){
+      axios
+        .post(url.post, data)
+        .then((response) => {
+          console.log(data);
+          this.setState({
+            dataCountry: [...this.state.dataCountry, response.data],
+            pais:''
+          })
+        })
     }
-    else 
+    else
       {
         this.setState({
           pais:''
@@ -46,12 +64,23 @@ export class Paises extends React.Component {
   }
 
   borrarPais = (id) => {
-    let otra = this.state.paises.filter((pais, idx) => idx !== id)
-    this.setState({
-      paises: otra
+    axios
+    .delete(url.delete+id)
+    .then((resp) => {
+        axios
+          .get(url.get)
+          .then((response) => {
+            this.setState({ dataCountry: response.data });
+          })
+          .catch((error) => { 
+            console.log(error);
+          });
+    })
+    .catch((error) => { // Aca deberé tratar el error de algun modo
+      console.log(error); // Tslvez un cartel alert
     });
-    window.localStorage.setItem("countries", JSON.stringify(otra))
   }
+
 
   render() {
     return (
@@ -70,10 +99,10 @@ export class Paises extends React.Component {
         </div>
         <h3 className="etiqueta">Paises</h3>
         <ul className="ulpais">
-          {this.state.paises.map((elem, indice) => {
+          {this.state.dataCountry.map(({name, id}, indice) => {
             return (<>
-              <li className="pais" key={indice} >{elem}</li>
-              <button className="botonP" key={indice} onClick={() => this.borrarPais(indice)}>Eliminar</button></>
+              <li className="pais" key={indice} >{name}</li>
+              <button className="botonP" key={indice} onClick={() => this.borrarPais(id)}>Eliminar</button></>
             )
           })}
         </ul>

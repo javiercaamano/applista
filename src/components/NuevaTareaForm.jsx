@@ -1,50 +1,51 @@
 import React from 'react';
 import "../index.css";
+import axios from "axios";
+import {validaValor} from '../utils/validaString'
+
+const url = {
+  get: "https://api-fake-pilar-tecno.herokuapp.com/jobs?_expand=organization",
+  getOrg: "https://api-fake-pilar-tecno.herokuapp.com/organizations?_expand=place",
+  post: "https://api-fake-pilar-tecno.herokuapp.com/jobs",
+  delete: "https://api-fake-pilar-tecno.herokuapp.com/jobs/",
+};
 
 export class NuevaTareaForm extends React.Component {
   constructor() {
     super();
     console.log(this.props)
     this.state = {
-        nuevaTarea: {
-            nombre: '',
-            compañia: '',
-            ciudad:'',
-            pais:''
-        },
-        nombrees: [],
-        ciudades: [],
-        paises: [],
-        compañias: []
+        job: '',
+        descripcion: 'cualquiera',
+        orgSelect: '',
+        organization: '',
+        dataOrganizations: [],
+        dataJobs: [],
     };
   }
 
   componentDidMount() {
-    if (localStorage.getItem("nombrees") != null) {
-      this.setState({
-        nombrees: JSON.parse(localStorage.getItem("nombrees")),
+    axios
+      .get(url.get)
+      .then((response) => {
+        console.log(response);
+        this.setState({ dataJobs: response.data });
+      })
+      .catch((error) => { // Aca deberé tratar el error de algun modo
+        console.log(error); // Tslvez un cartel alert
       });
-    }
-    if (localStorage.getItem("companies") != null) {
-      this.setState({
-        compañias: JSON.parse(localStorage.getItem("companies")),
+
+    axios
+      .get(url.getOrg)
+      .then((response) => {
+        console.log(response);
+        this.setState({ dataOrganizations: response.data });
+      })
+      .catch((error) => { // Aca deberé tratar el error de algun modo
+        console.log(error); // Tslvez un cartel alert
       });
-    }
-    if (localStorage.getItem("cities") != null) {
-      this.setState({
-        ciudades: JSON.parse(localStorage.getItem("cities")),
-      });
-    }
-    if (localStorage.getItem("countries") != null) {
-      this.setState({
-        paises: JSON.parse(localStorage.getItem("countries"))
-      });
-    }
   }
 
-  componentDidUpdate(){
-    window.localStorage.setItem("nombrees", JSON.stringify(this.state.nombrees))
-  }
 
   handleNuevaTareanombre = (even) => {
     this.setState(prevState => ({
@@ -86,28 +87,51 @@ export class NuevaTareaForm extends React.Component {
     );
   }
 
+  handleImput = (evt) => {
+    evt.preventDefault();
+    this.setState({
+        job: evt.target.value
+    });
+  }
+
 handleNuevaTarea = (ev) => {
     ev.preventDefault();
-    if ( this.state.nuevaTarea.nombre.trim() === '' ||
-        this.state.nuevaTarea.compañia.trim() === '' ||
-        this.state.nuevaTarea.ciudad.trim() === '' ||
-        this.state.nuevaTarea.pais.trim() === ''
-    ){
-        return false;
+    let job = this.state.job;
+    let data = {position: job, organizationId: this.state.orgSelect, description: this.state.descripcion};
+    if (validaValor(job)){
+      axios
+        .post(url.post, data)
+        .then((response) => {
+        this.setState({
+          dataJobs: [...this.state.dataJobs, response.data],
+          job:'',
+          orgSelect: ''
+        });
+      })
     }
-    this.props.agregaNuevaTarea(ev, this.state.nuevaTarea);
+    else
+      {
+        this.setState({
+          job:'',
+          orgSelect: ''
+        });
+        alert("Ingreso invalido...");
+      }
+
+    this.props.agregaNuevaTarea(ev, {
+      position: this.state.job,
+      description: this.state.description,
+      organization: this.state.organization,
+      
+      });
 }
 
 handleSelect= (ev) => {
 console.log(ev.target.value)
-  const {compañia, ciudad, pais} =JSON.parse (ev.target.value)
+  const organization = JSON.parse (ev.target.value)
   this.setState({
-  nuevaTarea: {
-    ...this.state.nuevaTarea,
-    compañia: compañia,
-    ciudad: ciudad,
-    pais: pais
-  }
+    orgSelect: organization.id,
+    organization: organization,
   })
 }
 
@@ -120,8 +144,8 @@ console.log(ev.target.value)
             <div className="formulario__grupo">
               <label className="formulario__label">Función:</label>
               <div  className="formulario__grupo-input">
-                <input className="formulario__input" type="text" required value={this.state.nuevaTarea.nombre}
-                  placeholder="Ingrese Función" onChange={(evento) => this.handleNuevaTareanombre(evento)}></input>
+                <input className="formulario__input" type="text" value={this.state.job}
+                  placeholder="Ingrese Función" onChange={(evento) => this.handleImput(evento)}></input>
               </div>
             </div>
 
@@ -131,13 +155,13 @@ console.log(ev.target.value)
               <div  className="formulario__grupo-input">
                 <select className="formulario__input" onChange={(evento) => this.handleSelect(evento)}>
                   <option value="">Selecione compañia...</option>
-                  {this.state.compañias.map((elem, indice) => {
-                    return (<option key={indice} value={JSON.stringify(elem)}>{elem.compañia}</option>)})}
+                  {this.state.dataOrganizations.map((elem, indice) => {
+                    return (<option key={indice} value={JSON.stringify(elem)}>{elem.name}</option>)})}
                 </select>
               </div>
             </div>
 
-      {/* Carga de Ciudad */}
+      {/* Carga de Ciudad
             <div className="formulario__grupo">
               <label className="formulario__label" >Ciudad:</label>
               <div  className="formulario__grupo-input">
@@ -145,13 +169,13 @@ console.log(ev.target.value)
               </div>
             </div>
 
-      {/* Carga de Pais */}
+      Carga de Pais
             <div className="formulario__grupo">
               <label className="formulario__label" >Pais:</label>
               <div  className="formulario__grupo-input">
               <input className="formulario__inputP" type="text" disable value={this.state.nuevaTarea.pais}></input>
               </div>
-            </div>
+            </div> */}
 
 
             <div className="formulario__grupo-btn-agregar">

@@ -1,34 +1,46 @@
 import React from 'react';
 import {validaValor} from '../../utils/validaString';
 import "../../Common/paises.css";
+import axios from "axios";
+
+const url = {
+  get: "https://api-fake-pilar-tecno.herokuapp.com/places",
+  getpais: "https://api-fake-pilar-tecno.herokuapp.com/countries",
+  post: "https://api-fake-pilar-tecno.herokuapp.com/places",
+  delete: "https://api-fake-pilar-tecno.herokuapp.com/places/",
+};
 
 export class Ciudades extends React.Component {
   constructor() {
     super();
      this.state = {
       ciudad: '',
-      paisSelect: '',
-      ciudades: [],
-      paises: []
+      paisSelect:'',
+      dataCities: [],
+      dataCountry:[]
     }
   }
 
   componentDidMount() {
-    if (localStorage.getItem("cities") != null) {
-      this.setState({
-        ciudades: JSON.parse(localStorage.getItem("cities")),
+    axios
+      .get(url.get)
+      .then((response) => {
+        console.log(response);
+        this.setState({ dataCities: response.data });
+      })
+      .catch((error) => { // Aca deberé tratar el error de algun modo
+        console.log(error); // Tslvez un cartel alert
       });
-    }
-    if (localStorage.getItem("countries") != null) {
-      this.setState({
-        paises: JSON.parse(localStorage.getItem("countries"))
+      axios
+      .get(url.getpais)
+      .then((response) => {
+        console.log(response);
+        this.setState({ dataCountry: response.data });
+      })
+      .catch((error) => { // Aca deberé tratar el error de algun modo
+        console.log(error); // Tslvez un cartel alert
       });
-    }
-  }
-
-  componentDidUpdate(){
-    window.localStorage.setItem("cities", JSON.stringify(this.state.ciudades))
-  }
+   }
 
   handleNuevaCiudad = (evt) => {
     evt.preventDefault();
@@ -39,15 +51,21 @@ export class Ciudades extends React.Component {
 
   agregarCiudad = (evto) => {
     let ciudad = this.state.ciudad;
-    let pais = this.state.paisSelect;
+    let data = {name: ciudad, countrieId: this.state.paisSelect};
+
     evto.preventDefault();
-    if (validaValor(ciudad) && validaValor(pais)){
-      this.setState({
-        ciudades: [...this.state.ciudades, {ciudad:ciudad, pais:pais}],
-        ciudad:''
-      });
+    if (validaValor(data.name)){
+      axios
+        .post(url.post, data)
+        .then((response) => {
+          console.log(data);
+          this.setState({
+            dataCities: [...this.state.dataCities, response.data],
+            ciudad:''
+          })
+        })
     }
-    else 
+    else
       {
         this.setState({
           ciudad:''
@@ -56,6 +74,7 @@ export class Ciudades extends React.Component {
       }
   }
 
+
   handleSelect= (ev) => {
     this.setState({
       paisSelect: ev.target.value
@@ -63,11 +82,21 @@ export class Ciudades extends React.Component {
   }
 
   borrarCiudad = (id) => {
-    let other = this.state.ciudades.filter((ciudad, idx) => idx !== id)
-    this.setState({
-      ciudades: other
+    axios
+    .delete(url.delete+id)
+    .then((resp) => {
+        axios
+          .get(url.get)
+          .then((response) => {
+            this.setState({ dataCities: response.data });
+          })
+          .catch((error) => { 
+            console.log(error);
+          });
+    })
+    .catch((error) => { // Aca deberé tratar el error de algun modo
+      console.log(error); // Tslvez un cartel alert
     });
-    window.localStorage.setItem("cities", JSON.stringify(other))
   }
 
   render() {
@@ -82,8 +111,8 @@ export class Ciudades extends React.Component {
                   placeholder="Ingrese Ciudad" onChange={(evento) => this.handleNuevaCiudad(evento)}></input>
                 <select className="formulario__select" onChange={(evento) => this.handleSelect(evento)}>
                   <option value="">Selecione pais...</option>
-                  {this.state.paises.map((elem, indice) => {
-                    return (<option key={indice} value={elem}>{elem}</option>)})}
+                  {this.state.dataCountry.map(({name, id}, indice) => {
+                    return (<option key={indice} value={id}>{name}</option>)})}
                 </select>
                 <button className="formulario__btnP" onClick={(evento) => this.agregarCiudad(evento)} >Agregar</button>
               </div>
@@ -92,10 +121,10 @@ export class Ciudades extends React.Component {
         </div>
         <h3 className="etiqueta">Ciudades</h3>
         <ul className="ulpais">
-          {this.state.ciudades.map((elem, indice) => {
+          {this.state.dataCities.map(({name, id}, indice) => {
             return (<>
-              <li className="pais" key={indice}>{elem.ciudad + ' ' + elem.pais}</li>
-              <button className="botonP" key={indice} onClick={() => this.borrarCiudad(indice)}>Eliminar</button></>
+              <li className="pais" key={indice}>{name}</li>
+              <button className="botonP" key={indice} onClick={() => this.borrarCiudad(id)}>Eliminar</button></>
             )
           })}
         </ul>
