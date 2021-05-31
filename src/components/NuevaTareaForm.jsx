@@ -94,7 +94,7 @@ export class NuevaTareaForm extends React.Component {
     });
   }
 
-handleNuevaTarea = (ev) => {
+  handleNuevaTarea = (ev) => {
     ev.preventDefault();
     let job = this.state.job;
     let data = {position: job, organizationId: this.state.orgSelect, description: this.state.descripcion};
@@ -126,14 +126,14 @@ handleNuevaTarea = (ev) => {
       });
 }
 
-handleSelect= (ev) => {
-console.log(ev.target.value)
-  const organization = JSON.parse (ev.target.value)
-  this.setState({
-    orgSelect: organization.id,
-    organization: organization,
-  })
-}
+  handleSelect= (ev) => {
+    console.log(ev.target.value)
+      const organization = JSON.parse (ev.target.value)
+      this.setState({
+        orgSelect: organization.id,
+        organization: organization,
+      })
+  }
 
   render() {
     return (
@@ -160,23 +160,6 @@ console.log(ev.target.value)
                 </select>
               </div>
             </div>
-
-      {/* Carga de Ciudad
-            <div className="formulario__grupo">
-              <label className="formulario__label" >Ciudad:</label>
-              <div  className="formulario__grupo-input">
-                <input className="formulario__inputP" type="text" disable value={this.state.nuevaTarea.ciudad}></input>
-              </div>
-            </div>
-
-      Carga de Pais
-            <div className="formulario__grupo">
-              <label className="formulario__label" >Pais:</label>
-              <div  className="formulario__grupo-input">
-              <input className="formulario__inputP" type="text" disable value={this.state.nuevaTarea.pais}></input>
-              </div>
-            </div> */}
-
 
             <div className="formulario__grupo-btn-agregar">
               <button className="formulario__btn" type="submit">Agregar</button>

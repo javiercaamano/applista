@@ -55,8 +55,7 @@ export class Tareas extends React.Component {
         </ul>
         <ul>
           {this.state.tareas.map((tarea, indice) => {
-            debugger
-            return <Tarea key={indice} elemento={tarea} onDelete={() => this.eliminarTarea(indice)}></Tarea>
+              return <Tarea key={indice} elemento={tarea} onDelete={() => this.eliminarTarea(indice)}></Tarea>
           })}
         </ul>
       </div>

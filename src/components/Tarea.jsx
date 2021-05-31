@@ -7,12 +7,14 @@ export class Tarea extends React.Component {
     super();
     //this.props=props;
     console.log(this.props);
-    this.state= {ciudad: ''}
+    this.state= {ciudad: ''};
+    this.buscarDatos = this.buscarDatos.bind(this)
   }
 
-componentDidMount(){
-  buscarDatos(this.props.id)
-}
+  componentDidMount(){
+    const id= this.props.elemento.organization.placeId
+    this.buscarDatos(id);
+} 
 
   buscarDatos(id){
     axios
@@ -29,18 +31,19 @@ componentDidMount(){
   }
 
   render() {
-    return (
-      <div className="elemento">
-            <ul key={this.props.id}>
-              <span>{this.props.elemento.position}</span>
-              <span>{this.props.elemento.organization.name }</span>
-              <span>{this.props.elemento.ciudad.name }</span>
-               <span>{this.props.elemento.ciudad.countrie.name }</span>
-              <button className="boton" onClick = {() => this.props.onDelete(this.props.id)}>Eliminar</button>
-            </ul>
-      </div>
-    );
+    if (this.state.ciudad) {
+      return (
+        <div className="elemento">
+              <ul key={this.props.id}>
+                <span>{this.props.elemento.position}</span>
+                <span>{this.props.elemento.organization.name }</span>
+                <span>{this.state.ciudad.name }</span>
+                <span>{this.state.ciudad.countrie.name }</span>
+                <button className="boton" onClick = {() => this.props.onDelete(this.props.id)}>Eliminar</button>
+              </ul>
+        </div>
+       );
+    }
+    else {return (<div></div>);}
   }
-
-  componentDidMount() {}
 }
