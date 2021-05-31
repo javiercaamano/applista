@@ -123,7 +123,7 @@ export class Compañias extends React.Component {
             </div>
           </form>
         </div>
-        <h3 className="etiqueta">Ciudades</h3>
+        <h3 className="etiqueta">Compañias</h3>
         <ul className="ulpais">
           {this.state.dataOrganizations.map(({name, id}, indice) => {
             return (<>
